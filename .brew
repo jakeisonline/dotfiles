@@ -21,17 +21,17 @@ if [ $brew_installed ] ; then
 fi;
 
 function check_or_install_formulae() {
-  {
-    echo "Checking for $1..."
-    brew list --versions | grep $1 | cut -d " " -f 2
-  } || {
-    echo "Attempting to install $1..."
+  installed_version=$(brew list --versions | grep $1 | cut -d " " -f 2)
+  if [ ! "$installed_version" ] ; then
+    echo "Attempting to install $1..." &&
     if [ $2 ] ; then
-      brew --cask install $1
+      brew install --cask $1
     else
       brew install $1
     fi;
-  }
+  else
+    echo "$1 already installed (v$installed_version)"
+  fi;
 }
 
 # Install brews
