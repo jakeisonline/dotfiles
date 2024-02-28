@@ -12,4 +12,4 @@
 	# Show most recently changed branches first.
 	sort = -committerdate
 [core]
-	excludesfile = /Users/jake/.gitignore
+	excludesfile = ~/.gitignore
