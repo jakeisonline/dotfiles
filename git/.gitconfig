@@ -1,0 +1,15 @@
+[user]
+	name = Jake Holman
+	email = me@jakeisonline.com
+[alias]
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+[init]
+	defaultBranch = main
+[help]
+	# Automatically correct and execute mistyped commands.
+	autocorrect = 1
+[branch]
+	# Show most recently changed branches first.
+	sort = -committerdate
+[core]
+	excludesfile = /Users/jake/.gitignore

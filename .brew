@@ -1,0 +1,63 @@
+#!/bin/bash
+
+brew_installed=
+
+# Check we have Homebrew, otherwise install it
+{
+  echo "Checking installed Homebrew version..." &&
+  brew --version
+  brew_installed=true
+} || {
+  echo "Failed to find Homebrew installed, installing..." &&
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  brew_installed=false
+}
+
+if [ $brew_installed ] ; then
+  echo "Attempting to update Homebrew..."
+  brew update
+  echo "Attempting to update existing brews..."
+  brew upgrade
+fi;
+
+function check_or_install_formulae() {
+  {
+    echo "Checking for $1..."
+    brew list --versions | grep $1 | cut -d " " -f 2
+  } || {
+    echo "Attempting to install $1..."
+    if [ $2 ] ; then
+      brew --cask install $1
+    else
+      brew install $1
+    fi;
+  }
+}
+
+# Install brews
+check_or_install_formulae "git"
+check_or_install_formulae "fzf"
+check_or_install_formulae "node"
+check_or_install_formulae "nvm"
+check_or_install_formulae "pnpm"
+check_or_install_formulae "pyenv"
+check_or_install_formulae "powerlevel10k"
+check_or_install_formulae "stow"
+check_or_install_formulae "zsh-autosuggestions"
+check_or_install_formulae "bash"
+check_or_install_formulae "bash-completion2"
+
+# Install casks
+check_or_install_formulae "font-monaspace" true
+check_or_install_formulae "firefox" true
+check_or_install_formulae "google-chrome" true
+check_or_install_formulae "visual-studio-code" true
+
+echo "Switching to updated bash..."
+# Switch to using brew-installed bash as default shell
+if ! fgrep -q "${BREW_PREFIX}/bin/bash" /etc/shells; then
+  echo "${BREW_PREFIX}/bin/bash" | sudo tee -a /etc/shells;
+  chsh -s "${BREW_PREFIX}/bin/bash";
+fi;
+
+unset check_or_install_formulae;
