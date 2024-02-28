@@ -45,7 +45,8 @@ check_or_install_formulae "powerlevel10k"
 check_or_install_formulae "stow"
 check_or_install_formulae "zsh-autosuggestions"
 check_or_install_formulae "bash"
-check_or_install_formulae "bash-completion2"
+check_or_install_formulae "bash-completion"
+check_or_install_formulae "mas"
 
 # Install casks
 check_or_install_formulae "font-monaspace" true
