@@ -2,7 +2,11 @@
 	name = Jake Holman
 	email = me@jakeisonline.com
 [alias]
+	a = add
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	c = commit
+	co = checkout
+	s = status
 [init]
 	defaultBranch = main
 [help]
