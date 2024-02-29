@@ -7,6 +7,7 @@
 	c = commit
 	co = checkout
 	s = status
+	p = push
 [init]
 	defaultBranch = main
 [help]
