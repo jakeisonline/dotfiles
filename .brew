@@ -48,6 +48,7 @@ check_or_install_formulae "zsh-autosuggestions"
 check_or_install_formulae "bash"
 check_or_install_formulae "bash-completion"
 check_or_install_formulae "mas"
+check_or_install_formulae "mysql" && brew services start mysql
 
 # Install casks
 check_or_install_formulae "font-monaspace" true
