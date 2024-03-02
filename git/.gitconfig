@@ -1,3 +1,5 @@
+# As borrowed from tdd@github, holman@github
+
 [user]
 	name = Jake Holman
 	email = me@jakeisonline.com
@@ -18,3 +20,20 @@
 	sort = -committerdate
 [core]
 	excludesfile = ~/.gitignore
+	editor = code --wait
+	# Don't consider trailing space change as a cause for merge conflicts
+  whitespace = -trailing-space
+[color]
+  ui = auto
+[push]
+	default = upstream
+[tag]
+  # Sort tags as version numbers whenever applicable, so 1.10.2 is AFTER 1.2.0.
+  sort = version:refname
+[versionsort]
+  prereleaseSuffix = -pre
+  prereleaseSuffix = .pre
+  prereleaseSuffix = -beta
+  prereleaseSuffix = .beta
+  prereleaseSuffix = -rc
+  prereleaseSuffix = .rc
