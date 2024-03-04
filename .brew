@@ -55,6 +55,7 @@ check_or_install_formulae "font-monaspace" true
 check_or_install_formulae "firefox" true
 check_or_install_formulae "google-chrome" true
 check_or_install_formulae "visual-studio-code" true
+check_or_install_formulae "google-cloud-sdk" true
 
 echo "Switching to updated bash..."
 # Switch to using brew-installed bash as default shell
