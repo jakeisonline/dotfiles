@@ -1,0 +1,4 @@
+# Set user properties when working in Potato repos
+[user]
+	name = Jake Holman
+	email = jake.holman@potatolondon.com

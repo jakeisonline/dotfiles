@@ -36,3 +36,5 @@
   prereleaseSuffix = .beta
   prereleaseSuffix = -rc
   prereleaseSuffix = .rc
+[includeIf "gitdir:~/.dev/potato/"]
+	path = ~/.gitconfig-potato
