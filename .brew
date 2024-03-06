@@ -61,6 +61,7 @@ check_or_install_formulae "firefox" true
 check_or_install_formulae "google-chrome" true
 check_or_install_formulae "visual-studio-code" true
 check_or_install_formulae "google-cloud-sdk" true
+check_or_install_formulae "spotify" true
 
 echo "Switching to updated bash..."
 # Switch to using brew-installed bash as default shell
