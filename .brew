@@ -52,7 +52,7 @@ check_or_install_formulae "mas"
 check_or_install_formulae "mysql" && brew services start mysql
 
 # Install casks
-check_or_install_formulae "logitech-options" true
+check_or_install_formulae "logitech-options-plus" true
 check_or_install_formulae "arc" true
 check_or_install_formulae "alfred" true
 check_or_install_formulae "iterm2" true
