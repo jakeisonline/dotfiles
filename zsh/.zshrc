@@ -113,6 +113,15 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# google-cli
+source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
+source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+
+# mysql
+export PATH="/usr/local/opt/mysql/bin:$PATH"
+export LDFLAGS="-L/usr/local/opt/mysql/lib"
+export CPPFLAGS="-I/usr/local/opt/mysql/include"
+
 # Nvm
 mkdir -p ~/.nvm
 export NVM_DIR="$HOME/.nvm"
