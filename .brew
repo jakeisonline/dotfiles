@@ -56,7 +56,7 @@ check_or_install_formulae "pkg-config"
 check_or_install_formulae "openjdk@11"
 
 # Install casks
-check_or_install_formulae "logitech-options-plus" true
+check_or_install_formulae "logi-options-plus" true
 check_or_install_formulae "arc" true
 check_or_install_formulae "alfred" true
 check_or_install_formulae "iterm2" true
