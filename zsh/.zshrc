@@ -103,7 +103,7 @@ else
   export EDITOR='code'
 fi
 
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#292c3b"
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#313342"
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
