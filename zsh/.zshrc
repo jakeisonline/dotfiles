@@ -113,25 +113,41 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# grpcio exports for ARM chips
+if [[ $(uname -m ) == "arm64" ]]; then
+  export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
+  export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
+fi
+
+# openssl exports
+export PATH="$(brew --prefix)/opt/openssl/bin:$PATH"
+export CFLAGS="-I$(brew --prefix)/opt/openssl/include"
+export LDFLAGS="-L$(brew --prefix)/opt/openssl/lib"
+
 # google-cli
 source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
 source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
 
 # mysql
-export PATH="/usr/local/opt/mysql/bin:$PATH"
-export LDFLAGS="-L/usr/local/opt/mysql/lib"
-export CPPFLAGS="-I/usr/local/opt/mysql/include"
+export PATH="$(brew --prefix)/opt/mysql-client/bin:$PATH"
+export LDFLAGS="-L$(brew --prefix)/opt/mysql-client/lib"
+export CPPFLAGS="-I$(brew --prefix)/opt/mysql-client/include"
+export PKG_CONFIG_PATH="$(brew --prefix)/opt/mysql-client/lib/pkgconfig"
 
 # Nvm
 mkdir -p ~/.nvm
-export NVM_DIR="$HOME/.nvm"
-  [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$(brew --prefix)/opt/nvm/nvm.sh" ] && \. "$(brew --prefix)/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # Pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+# openjdk
+export PATH="$(brew --prefix)/opt/openjdk@11/bin:$PATH"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

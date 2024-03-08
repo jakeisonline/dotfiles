@@ -41,6 +41,7 @@ check_or_install_formulae "node"
 check_or_install_formulae "nvm"
 check_or_install_formulae "pnpm"
 check_or_install_formulae "pyenv"
+check_or_install_formulae "pyenv-virtualenv"
 check_or_install_formulae "pipenv"
 check_or_install_formulae "zsh"
 check_or_install_formulae "powerlevel10k"
@@ -50,6 +51,9 @@ check_or_install_formulae "bash"
 check_or_install_formulae "bash-completion"
 check_or_install_formulae "mas"
 check_or_install_formulae "mysql" && brew services start mysql
+check_or_install_formulae "mysql-client"
+check_or_install_formulae "pkg-config"
+check_or_install_formulae "openjdk@11"
 
 # Install casks
 check_or_install_formulae "logitech-options-plus" true
@@ -60,7 +64,7 @@ check_or_install_formulae "font-monaspace" true
 check_or_install_formulae "firefox" true
 check_or_install_formulae "google-chrome" true
 check_or_install_formulae "visual-studio-code" true
-check_or_install_formulae "google-cloud-sdk" true
+check_or_install_formulae "google-cloud-sdk" true && echo "Don't forget to run: gcloud auth login"
 check_or_install_formulae "spotify" true
 
 echo "Switching to updated bash..."
