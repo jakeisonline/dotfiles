@@ -13,8 +13,6 @@ readonly FORMULAES=(
   "powerlevel10k"
   "stow"
   "zsh-autosuggestions"
-  "bash"
-  "bash-completion"
   "mas"
   "mysql-client"
   "pkg-config"
