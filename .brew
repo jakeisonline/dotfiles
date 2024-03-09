@@ -1,77 +1,113 @@
 #!/bin/bash
 
-brew_installed=
+readonly FORMULAES=(
+  "git"
+  "fzf"
+  "node"
+  "nvm"
+  "pnpm"
+  "pyenv"
+  "pyenv-virtualenv"
+  "pipenv"
+  "zsh"
+  "powerlevel10k"
+  "stow"
+  "zsh-autosuggestions"
+  "bash"
+  "bash-completion"
+  "mas"
+  "mysql-client"
+  "pkg-config"
+  "openjdk@11"
+)
 
-# Check we have Homebrew, otherwise install it
-{
-  echo "Checking installed Homebrew version..." &&
-  brew --version
-  brew_installed=true
-} || {
-  echo "Failed to find Homebrew installed, installing..." &&
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  brew_installed=false
-}
+readonly CASKS=(
+  "logi-options-plus"
+  "arc"
+  "alfred"
+  "iterm2"
+  "font-monaspace"
+  "firefox"
+  "google-chrome"
+  "visual-studio-code"
+  "google-cloud-sdk"
+  "spotify"
+)
 
-if [ $brew_installed ] ; then
-  echo "Attempting to update Homebrew..."
-  brew update
-  echo "Attempting to update existing brews..."
-  brew upgrade
-fi;
+readonly TAPS=(
+  "homebrew/cask-fonts"
+)
 
-function check_or_install_formulae() {
-  installed_version=$(brew list --versions | grep $1 | cut -d " " -f 2)
-  if [ ! "$installed_version" ] ; then
-    echo "Attempting to install $1..." &&
-    if [ $2 ] ; then
-      brew install --cask $1
-    else
-      brew install $1
-    fi;
+readonly INSTALLED_FORMULAE=$(brew list -1) || null
+readonly BREW_INSTALLED=$(brew --version) || null
+
+function is_brew_formulae_installed() {
+  if [[ "$INSTALLED_FORMULAE" == *$1* ]]; then
+    return 0
   else
-    echo "$1 already installed (v$installed_version)"
+    return 1
   fi;
 }
 
-# Install brews
-check_or_install_formulae "git"
-check_or_install_formulae "fzf"
-check_or_install_formulae "node"
-check_or_install_formulae "nvm"
-check_or_install_formulae "pnpm"
-check_or_install_formulae "pyenv"
-check_or_install_formulae "pyenv-virtualenv"
-check_or_install_formulae "pipenv"
-check_or_install_formulae "zsh"
-check_or_install_formulae "powerlevel10k"
-check_or_install_formulae "stow"
-check_or_install_formulae "zsh-autosuggestions"
-check_or_install_formulae "bash"
-check_or_install_formulae "bash-completion"
-check_or_install_formulae "mas"
-check_or_install_formulae "mysql" && brew services start mysql
-check_or_install_formulae "mysql-client"
-check_or_install_formulae "pkg-config"
-check_or_install_formulae "openjdk@11"
+function brew_tap_install() {
+  echo "Attempting to tap $1..."
+  brew tap $1
+}
 
-# Install casks
-check_or_install_formulae "logi-options-plus" true
-check_or_install_formulae "arc" true
-check_or_install_formulae "alfred" true
-check_or_install_formulae "iterm2" true
-check_or_install_formulae "font-monaspace" true
-check_or_install_formulae "firefox" true
-check_or_install_formulae "google-chrome" true
-check_or_install_formulae "visual-studio-code" true
-check_or_install_formulae "google-cloud-sdk" true && echo "Don't forget to run: gcloud auth login"
-check_or_install_formulae "spotify" true
+function brew_formulae_install() {
+  echo "Attempting to install $1..."
+  if [ $2 ] ; then
+    brew install $2 $1
+  else
+    brew install $1
+  fi;
+}
 
-echo "Switching to updated bash..."
-# Switch to using brew-installed bash as default shell
-if ! fgrep -q "${BREW_PREFIX}/bin/bash" /etc/shells; then
-  echo "${BREW_PREFIX}/bin/bash" | sudo tee -a /etc/shells;
-  chsh -s "${BREW_PREFIX}/bin/bash";
+if [ "$BREW_INSTALLED" ]; then
+  echo "Homebrew is installed, attempting to update instead..."
+  brew update
+
+  if [ "$INSTALLED_FORMULAE" ]; then
+    echo "Attempting to update existing formulaes..."
+    brew upgrade
+  fi;
+else
+  echo "Homebrew is not installed, attempting to install..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi;
 
-unset check_or_install_formulae;
+echo "Attempting to add taps..."
+
+for tap in "${TAPS[@]}"
+do
+  if is_brew_formulae_installed $tap; then
+    echo "$tap already installed, skipping..."
+  else
+    echo "Attempting to install $tap..."
+    brew tap $tap
+  fi
+done
+
+echo "Attempting to install casks..."
+
+for cask in "${CASKS[@]}"
+do
+  if is_brew_formulae_installed $cask; then
+    echo "$cask already installed, skipping..."
+  else
+    echo "Attempting to install $cask..."
+    brew install --cask $cask
+  fi
+done
+
+echo "Attempting to install formulaes..."
+
+for formulae in "${FORMULAES[@]}"
+do
+  if is_brew_formulae_installed $formulae; then
+    echo "$formulae already installed, skipping..."
+  else
+    echo "Attempting to install $formulae..."
+    brew install $formulae
+  fi
+done
