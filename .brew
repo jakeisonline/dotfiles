@@ -20,16 +20,22 @@ readonly FORMULAES=(
 )
 
 readonly CASKS=(
-  "logi-options-plus"
-  "arc"
-  "alfred"
-  "iterm2"
-  "font-monaspace"
-  "firefox"
   "google-chrome"
+  "font-monaspace"
+  "logi-options-plus"
+  "iterm2"
+  "moom"
   "visual-studio-code"
-  "google-cloud-sdk"
+  "sim-daltonism"
+  "sequel-ace"
+  "alfred"
+  "firefox"
+  "arc"
+  "slack"
+  "discord"
+  "whatsapp"
   "spotify"
+  "google-cloud-sdk"
 )
 
 readonly TAPS=(

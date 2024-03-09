@@ -1,12 +1,7 @@
 #!/bin/bash
 
 masApps=(
-  "693112260"  # Sim Daltonism
-  "419330170"  # Moom
-  "1147396723"  # WhatsApp
   "904280696"  # Things
-  "1518036000"  # Sequel Ace
-  "803453959"  # Slack
 )
 
 for app in ${masApps[@]}; do
