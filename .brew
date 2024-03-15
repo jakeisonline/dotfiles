@@ -20,6 +20,7 @@ readonly FORMULAES=(
 )
 
 readonly CASKS=(
+  "sensiblesidebuttons"
   "google-chrome"
   "font-monaspace"
   "logi-options-plus"
