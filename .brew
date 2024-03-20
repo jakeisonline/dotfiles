@@ -36,6 +36,7 @@ readonly CASKS=(
   "discord"
   "whatsapp"
   "spotify"
+  "handbrake"
   "google-cloud-sdk"
 )
 
