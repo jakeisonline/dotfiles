@@ -6,9 +6,11 @@
 	a = add
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	c = commit
+	cm = commit -m
 	co = checkout
 	s = status
 	p = push
+	pu = pull --rebase
 [init]
 	defaultBranch = main
 [help]
