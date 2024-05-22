@@ -20,8 +20,9 @@ readonly FORMULAES=(
 )
 
 readonly CASKS=(
+  "flux"
   "caffeine"
-  "sensiblesidebuttons"
+  "linearmouse"
   "google-chrome"
   "font-monaspace"
   "logi-options-plus"
