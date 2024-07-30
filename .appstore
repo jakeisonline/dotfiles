@@ -2,6 +2,7 @@
 
 masApps=(
   "904280696"  # Things
+  "497799835" # Xcode
 )
 
 for app in ${masApps[@]}; do
