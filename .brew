@@ -22,12 +22,12 @@ readonly FORMULAES=(
 readonly CASKS=(
   "flux"
   "caffeine"
+  "rectangle"
   "linearmouse"
-  "google-chrome"
-  "font-monaspace"
   "logi-options-plus"
   "iterm2"
-  "moom"
+  "google-chrome"
+  "font-monaspace"
   "visual-studio-code"
   "sim-daltonism"
   "sequel-ace"
@@ -40,6 +40,8 @@ readonly CASKS=(
   "spotify"
   "handbrake"
   "google-cloud-sdk"
+  "flutter"
+  "android-studio"
 )
 
 readonly TAPS=(
