@@ -1,8 +1,6 @@
 # Apply with: brew bundle --file=Brewfile
 # (or, alternatively, bootstrap.sh does this for you.)
 
-tap "homebrew/services"
-
 # --- Formulae ---
 brew "awscli"
 brew "ffmpeg"
