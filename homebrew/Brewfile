@@ -9,7 +9,7 @@ brew "ffmpeg"
 brew "fzf"
 brew "git"
 brew "libpq", link: true
-brew "mailhog"
+brew "mailpit"
 brew "mas"
 brew "mysql"
 brew "mysql-client"
