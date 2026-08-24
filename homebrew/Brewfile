@@ -25,6 +25,7 @@ brew "stow"
 brew "vercel"
 brew "zsh"
 brew "zsh-autosuggestions"
+brew "docker-compose"
 
 # --- Casks ---
 cask "cursor"
