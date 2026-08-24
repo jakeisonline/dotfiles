@@ -1,7 +1,8 @@
 # As borrowed from tdd@github, holman@github
 [user]
 	name = Jake Holman
-	email = me@jakeisonline.com
+	email = jake.holman@akqaleap.com
+	signingkey = /Users/jake/.ssh/id_ed25519.pub
 [alias]
 	a = add
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
@@ -21,7 +22,7 @@
 	sort = -committerdate
 [core]
 	excludesfile = ~/.gitignore
-	editor = code --wait
+	editor = cursor --wait
 	# Don't consider trailing space change as a cause for merge conflicts
   whitespace = -trailing-space
 [color]
@@ -38,5 +39,9 @@
   prereleaseSuffix = .beta
   prereleaseSuffix = -rc
   prereleaseSuffix = .rc
-[includeIf "gitdir:~/.dev/potato/"]
-	path = ~/.gitconfig-potato
+[includeIf "gitdir:~/.dev/leap/"]
+	path = ~/.gitconfig-leap
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
