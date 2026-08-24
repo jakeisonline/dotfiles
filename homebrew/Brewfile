@@ -1,0 +1,52 @@
+# Apply with: brew bundle --file=Brewfile
+# (or, alternatively, bootstrap.sh does this for you.)
+
+tap "homebrew/services"
+
+# --- Formulae ---
+brew "awscli"
+brew "ffmpeg"
+brew "fzf"
+brew "git"
+brew "libpq", link: true
+brew "mailhog"
+brew "mas"
+brew "mysql"
+brew "mysql-client"
+brew "neonctl"
+brew "node"
+brew "nvm"
+brew "openjdk@11"
+brew "pipenv"
+brew "pkgconf"
+brew "pnpm"
+brew "powerlevel10k"
+brew "pyenv"
+brew "pyenv-virtualenv"
+brew "stow"
+brew "vercel"
+brew "zsh"
+brew "zsh-autosuggestions"
+
+# --- Casks ---
+cask "cursor"
+cask "raycast"
+cask "font-monaspace"
+cask "gcloud-cli"
+cask "handbrake-app"
+cask "iterm2"
+cask "linearmouse"
+cask "logi-options+"
+cask "rectangle"
+cask "sensiblesidebuttons"
+cask "spotify"
+cask "visual-studio-code"
+
+# --- Mac App Store ---
+mas "Gifski", id: 1351639930
+mas "Sequel Ace", id: 1518036000
+mas "Sim Daltonism", id: 693112260
+mas "Slack", id: 803453959
+mas "Things", id: 904280696
+mas "WhatsApp", id: 310633997
+mas "Xcode", id: 497799835
