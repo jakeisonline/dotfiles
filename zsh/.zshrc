@@ -5,9 +5,24 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-BREW_PREFIX=$(brew --prefix)
+# Homebrew's prefix is fixed per architecture and essentially
+# never changes, so there's nothing to gain from asking brew every time.
+if [[ -d /opt/homebrew ]]; then
+  BREW_PREFIX="/opt/homebrew"
+else
+  BREW_PREFIX="/usr/local"
+fi
 
-autoload -U compinit; compinit
+# Only rebuild the completion dump once a day, and only run this once
+# (oh-my-zsh will see compinit is already loaded and skip its own call).
+autoload -Uz compinit
+zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
+if [[ -n "$zcompdump"(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi
+
 source $BREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme
 source ~/.oh-my-zsh/custom/plugins/fzf-tab/fzf-tab.plugin.zsh
 source $BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -61,7 +76,6 @@ zstyle ':omz:update' frequency 13
 # You can also set it to another string to have that shown instead of the default red dots.
 # e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
 # Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-COMPLETION_WAITING_DOTS="true"
 COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
 
 # Uncomment the following line if you want to disable marking untracked files
@@ -85,7 +99,14 @@ COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+#
+# nvm's lazy-load option must be set *before* oh-my-zsh.sh is sourced.
+# This defers sourcing nvm.sh until you actually run nvm/node/npm/npx/
+# pnpm/pnpx/yarn/corepack, and will also auto-load the right version
+# when you cd into a directory containing an .nvmrc file.
+zstyle ':omz:plugins:nvm' lazy yes
+zstyle ':omz:plugins:nvm' autoload yes
+plugins=(git nvm)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -118,7 +139,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#313342"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # grpcio exports for ARM chips
-if [[ $(uname -m ) == "arm64" ]]; then
+if [[ $(uname -m) == "arm64" ]]; then
   export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
   export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
 fi
@@ -128,27 +149,11 @@ export PATH="$BREW_PREFIX/opt/openssl/bin:$PATH"
 export CFLAGS="-I$BREW_PREFIX/opt/openssl/include"
 export LDFLAGS="-L$BREW_PREFIX/opt/openssl/lib"
 
-# google-cli
-source "$BREW_PREFIX/share/google-cloud-sdk/path.zsh.inc"
-source "$BREW_PREFIX/share/google-cloud-sdk/completion.zsh.inc"
-
-# mysql
+# mysql (appended, not overwritten, so openssl flags above are preserved)
 export PATH="$BREW_PREFIX/opt/mysql-client/bin:$PATH"
-export LDFLAGS="-L$BREW_PREFIX/opt/mysql-client/lib"
+export LDFLAGS="$LDFLAGS -L$BREW_PREFIX/opt/mysql-client/lib"
 export CPPFLAGS="-I$BREW_PREFIX/opt/mysql-client/include"
 export PKG_CONFIG_PATH="$BREW_PREFIX/opt/mysql-client/lib/pkgconfig"
-
-# Nvm
-mkdir -p ~/.nvm
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$BREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$BREW_PREFIX/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "$BREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$BREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-
-# Pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
 
 # openjdk
 export PATH="$BREW_PREFIX/opt/openjdk@11/bin:$PATH"
@@ -163,3 +168,19 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+alias pm="python manage.py"
+
+# ---------------------------------------------------------------------------
+# Lazy-loaded tools
+# ---------------------------------------------------------------------------
+
+# Shared loader for gcloud, gsutil and bq.
+_load_gcloud_sdk() {
+  unset -f gcloud gsutil bq
+  source "$BREW_PREFIX/share/google-cloud-sdk/path.zsh.inc"
+  source "$BREW_PREFIX/share/google-cloud-sdk/completion.zsh.inc"
+}
+gcloud() { _load_gcloud_sdk; gcloud "$@"; }
+gsutil() { _load_gcloud_sdk; gsutil "$@"; }
+bq()     { _load_gcloud_sdk; bq "$@"; }
